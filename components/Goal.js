@@ -1,11 +1,25 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  // TOUCHABLE COMPONENTS
+  // wrapper to make components touchable, different touchable versions
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+} from 'react-native'
 
 const Goal = (props) => {
   return (
-    <View style={styles.goal}>
-      <Text>{props.title}</Text>
-    </View>
+    <TouchableOpacity
+      onPress={() => props.onDelete(props.id)}
+      activeOpacity={0.6}
+    >
+      <View style={styles.goal}>
+        <Text>{props.title}</Text>
+      </View>
+    </TouchableOpacity>
   )
 }
 
