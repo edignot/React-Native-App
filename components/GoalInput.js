@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
-import { View, TextInput, Button, StyleSheet, Modal } from 'react-native'
+import {
+  View,
+  TextInput,
+  // cannot add width on button, need to wrap in a separate view
+  Button,
+  StyleSheet,
+  Modal,
+} from 'react-native'
 
 const GoalInput = (props) => {
   const [enteredGoal, setEnteredGoal] = useState('')
@@ -22,8 +29,18 @@ const GoalInput = (props) => {
           onChangeText={goalInputHandler}
           value={enteredGoal}
         />
-        <Button title='ADD' style={styles.addBtn} onPress={addGoalHandler} />
-        <Button title='CANCEL' color='red' onPress={props.cancelGoal} />
+        <View style={styles.buttonContainer}>
+          <View style={styles.button}>
+            <Button
+              title='ADD'
+              style={styles.addBtn}
+              onPress={addGoalHandler}
+            />
+          </View>
+          <View style={styles.button}>
+            <Button title='CANCEL' color='red' onPress={props.cancelGoal} />
+          </View>
+        </View>
       </View>
     </Modal>
   )
@@ -45,4 +62,12 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   addBtn: {},
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+  },
+  button: {
+    width: '40%',
+  },
 })
