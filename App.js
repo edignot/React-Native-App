@@ -6,8 +6,13 @@ import {
   View,
   Button,
   TextInput,
+  // wrap scrollable area, for limited amount of items
   ScrollView,
+  // expects array of object, where every object has a key property. For long lists, better performance than scrollList
+  FlatList,
 } from 'react-native'
+import Goal from './components/Goal'
+import GoalInput from './components/GoalInput'
 
 export default function App() {
   const [enteredGoal, setEnteredGoal] = useState('')
@@ -18,48 +23,25 @@ export default function App() {
   }
 
   const addGoalHandler = () => {
-    setGoals((currentGoals) => [...currentGoals, enteredGoal])
+    setGoals((currentGoals) => [
+      ...currentGoals,
+      { id: Math.random().toString(), value: enteredGoal },
+    ])
   }
   return (
     <View style={{ padding: 50 }}>
-      <View style={styles.screen}>
-        <TextInput
-          placeholder='Goal'
-          style={styles.input}
-          onChangeText={goalInputHandler}
-          value={enteredGoal}
-        />
-        <Button title='Add' style={styles.addBtn} onPress={addGoalHandler} />
-      </View>
-      <ScrollView>
-        {goals.map((goal) => (
-          <View key={goal}>
-            <Text style={styles.goal}>{goal}</Text>
-          </View>
-        ))}
-      </ScrollView>
+      <GoalInput
+        goalInputHandler={goalInputHandler}
+        enteredGoal={enteredGoal}
+        addGoalHandler={addGoalHandler}
+      />
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={goals}
+        renderItem={(itemData) => <Goal title={itemData.item.value} />}
+      ></FlatList>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  input: {
-    borderColor: '#ddd',
-    borderWidth: 1,
-    flex: 1,
-    padding: 10,
-  },
-  goal: {
-    padding: 10,
-    backgroundColor: '#eee',
-    borderColor: '#ddd',
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  addBtn: {},
-})
+const styles = StyleSheet.create({})
