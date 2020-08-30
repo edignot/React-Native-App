@@ -1,3 +1,6 @@
+import { YellowBox } from 'react-native'
+YellowBox.ignoreWarnings(['Remote debugger'])
+
 import { StatusBar } from 'expo-status-bar'
 import React, { useState } from 'react'
 import {
